@@ -34,7 +34,7 @@ const Layout = ({ children }: LayoutProps) => {
                   variant="outline" 
                   size="sm"
                   onClick={handleLogout}
-                  className="text-white border-white hover:bg-admin-dark"
+                  className="text-white border-white"
                 >
                   <LogOut className="h-4 w-4 mr-1" />
                   Logout
