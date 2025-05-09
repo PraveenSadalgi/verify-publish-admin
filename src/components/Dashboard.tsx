@@ -1,12 +1,25 @@
 
+import { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAdmin } from '@/contexts/AdminContext';
 import { Inbox, CheckCheck, XCircle } from 'lucide-react';
 import SubmissionList from './SubmissionList';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Dashboard = () => {
   const { pendingSubmissions, approvedSubmissions, rejectedSubmissions } = useAdmin();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get current tab from URL query parameter
+  const searchParams = new URLSearchParams(location.search);
+  const currentTab = searchParams.get('tab') || 'pending';
+  
+  // Update URL when tab changes
+  const handleTabChange = (tab: string) => {
+    navigate(`/dashboard?tab=${tab}`);
+  };
 
   return (
     <div className="space-y-6">
@@ -53,7 +66,7 @@ const Dashboard = () => {
         </Card>
       </div>
 
-      <Tabs defaultValue="pending" className="space-y-4">
+      <Tabs value={currentTab} onValueChange={handleTabChange} className="space-y-4">
         <TabsList>
           <TabsTrigger value="pending" className="relative">
             Pending
